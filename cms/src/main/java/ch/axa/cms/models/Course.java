@@ -1,12 +1,19 @@
  package ch.axa.cms.models;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,6 +30,16 @@ public class Course {
     private int score;
     private String description;
 
+    @ManyToMany
+    @JoinTable(name = "cours_departement", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "departement_id"))
+    @JsonIgnoreProperties(value = "courses")
+    private Set<Departement> departements = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "cours_employee", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    @JsonIgnoreProperties(value = "courses")
+    private Set<Employee> employees = new HashSet<>();
+ 
     public long getId() {
         return id;
     }

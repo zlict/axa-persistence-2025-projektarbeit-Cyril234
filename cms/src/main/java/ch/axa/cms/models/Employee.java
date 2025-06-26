@@ -1,5 +1,10 @@
 package ch.axa.cms.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +18,14 @@ public class Employee {
     private String name;
     private String mail;
     private String superior;
+
+    @ManyToMany
+    @JoinTable(name = "employee_warning", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "warning_id"))
+    @JsonIgnoreProperties(value = "employees")
+    private Set<Warning> warnings = new HashSet<>();
+
+    @ManyToMany(mappedBy = "employees")
+    private Set<Course> courses = new HashSet<>();
 
     // Getter und Setter
     public Long getId() { return id; }

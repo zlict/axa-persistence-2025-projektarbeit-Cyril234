@@ -1,5 +1,8 @@
 package ch.axa.cms.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +14,9 @@ public class Departement {
     private Long id;
 
     private String name;
+
+    @ManyToMany(mappedBy = "departements")
+    private Set<Course> courses = new HashSet<>();
 
     // Getter und Setter
     public Long getId() { return id; }
