@@ -41,11 +41,67 @@ public class Employee {
     @JsonIgnoreProperties("superior")
     private Set<Employee> subordinates = new HashSet<>();
 
-    // Getter und Setter
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getMail() { return mail; }
-    public void setMail(String mail) { this.mail = mail; }
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public Set<Warning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(Set<Warning> warnings) {
+        this.warnings = warnings;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
+
+    public Employee getSuperior() {
+        return superior;
+    }
+
+    public void setSuperior(Employee superior) {
+        this.superior = superior;
+    }
+
+    public Set<Employee> getSubordinates() {
+        return subordinates;
+    }
+
+    public void setSubordinates(Set<Employee> subordinates) {
+        this.subordinates = subordinates;
+    }  
 } 

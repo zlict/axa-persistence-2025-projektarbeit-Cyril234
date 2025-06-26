@@ -27,9 +27,13 @@ public class Course {
     private long id;
 
     private LocalDateTime expirationDate;
+
     private boolean finished;
+
     private int duration;
+
     private int score;
+
     private String description;
 
     @ManyToMany
@@ -48,41 +52,84 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private Set<Warning> warnings = new HashSet<>();
- 
+
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
+
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
     }
+
     public boolean isFinished() {
         return finished;
     }
+
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
+
     public int getDuration() {
         return duration;
     }
+
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
     public int getScore() {
         return score;
     }
+
     public void setScore(int score) {
         this.score = score;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Departement> getDepartements() {
+        return departements;
+    }
+
+    public void setDepartements(Set<Departement> departements) {
+        this.departements = departements;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<Warning> getWarnings() {
+        return warnings;
+    }
+
+    public void setWarnings(Set<Warning> warnings) {
+        this.warnings = warnings;
     }
 }

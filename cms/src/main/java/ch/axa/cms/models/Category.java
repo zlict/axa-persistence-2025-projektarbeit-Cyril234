@@ -20,7 +20,6 @@ public class Category {
     private long id;
 
     private String name;
-
     private String description;
 
     @OneToMany(mappedBy = "category")
@@ -48,5 +47,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }
