@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -39,6 +41,13 @@ public class Course {
     @JoinTable(name = "cours_employee", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
     @JsonIgnoreProperties(value = "courses")
     private Set<Employee> employees = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "courses")
+    private Category category;
+
+    @OneToMany(mappedBy = "course")
+    private Set<Warning> warnings = new HashSet<>();
  
     public long getId() {
         return id;

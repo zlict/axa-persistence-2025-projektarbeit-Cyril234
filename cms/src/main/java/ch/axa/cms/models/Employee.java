@@ -17,7 +17,6 @@ public class Employee {
 
     private String name;
     private String mail;
-    private String superior;
 
     @ManyToMany
     @JoinTable(name = "employee_warning", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "warning_id"))
@@ -27,6 +26,21 @@ public class Employee {
     @ManyToMany(mappedBy = "employees")
     private Set<Course> courses = new HashSet<>();
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = "employees")
+    private Departement departement;
+
+    // Selbstbeziehung: Vorgesetzter
+    @ManyToOne
+    @JoinColumn(name = "superior_id")
+    @JsonIgnoreProperties("subordinates")
+    private Employee superior;
+
+    // Selbstbeziehung: Untergebene
+    @OneToMany(mappedBy = "superior")
+    @JsonIgnoreProperties("superior")
+    private Set<Employee> subordinates = new HashSet<>();
+
     // Getter und Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -34,6 +48,4 @@ public class Employee {
     public void setName(String name) { this.name = name; }
     public String getMail() { return mail; }
     public void setMail(String mail) { this.mail = mail; }
-    public String getSuperior() { return superior; }
-    public void setSuperior(String superior) { this.superior = superior; }
 } 

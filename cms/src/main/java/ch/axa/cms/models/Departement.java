@@ -18,6 +18,9 @@ public class Departement {
     @ManyToMany(mappedBy = "departements")
     private Set<Course> courses = new HashSet<>();
 
+    @OneToMany(mappedBy = "departement")
+    private Set<Employee> employees = new HashSet<>();
+
     // Getter und Setter
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
