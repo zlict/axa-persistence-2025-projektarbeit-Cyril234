@@ -23,8 +23,8 @@ public class Employee {
     @JsonIgnoreProperties(value = "employees")
     private Set<Warning> warnings = new HashSet<>();
 
-    @ManyToMany(mappedBy = "employees")
-    private Set<Course> courses = new HashSet<>();
+    @OneToMany(mappedBy = "employee")
+    private Set<EmployeeCourse> employeeCourses = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "employees")
@@ -73,12 +73,12 @@ public class Employee {
         this.warnings = warnings;
     }
 
-    public Set<Course> getCourses() {
-        return courses;
+    public Set<EmployeeCourse> getEmployeeCourses() {
+        return employeeCourses;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public void setEmployeeCourses(Set<EmployeeCourse> employeeCourses) {
+        this.employeeCourses = employeeCourses;
     }
 
     public Departement getDepartement() {
@@ -103,5 +103,8 @@ public class Employee {
 
     public void setSubordinates(Set<Employee> subordinates) {
         this.subordinates = subordinates;
-    }  
+    }
+
+
+    
 } 

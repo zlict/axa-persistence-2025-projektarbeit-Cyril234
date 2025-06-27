@@ -8,6 +8,11 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "departement")
 public class Departement {
+    
+    public Departement(String name) {
+        this.name = name;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "departement_id")

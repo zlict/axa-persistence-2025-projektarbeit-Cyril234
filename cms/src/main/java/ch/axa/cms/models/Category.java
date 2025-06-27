@@ -14,6 +14,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "category")
 public class Category {
+
+
+    public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")

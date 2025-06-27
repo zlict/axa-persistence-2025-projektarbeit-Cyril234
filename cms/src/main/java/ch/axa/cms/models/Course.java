@@ -28,12 +28,6 @@ public class Course {
 
     private LocalDateTime expirationDate;
 
-    private boolean finished;
-
-    private int duration;
-
-    private int score;
-
     private String description;
 
     @ManyToMany
@@ -41,17 +35,15 @@ public class Course {
     @JsonIgnoreProperties(value = "courses")
     private Set<Departement> departements = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "cours_employee", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
-    @JsonIgnoreProperties(value = "courses")
-    private Set<Employee> employees = new HashSet<>();
-
     @ManyToOne
     @JsonIgnoreProperties(value = "courses")
     private Category category;
 
     @OneToMany(mappedBy = "course")
     private Set<Warning> warnings = new HashSet<>();
+
+    @OneToMany(mappedBy = "course")
+    private Set<EmployeeCourse> employeeCourses = new HashSet<>();
 
     public long getId() {
         return id;
@@ -67,30 +59,6 @@ public class Course {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public String getDescription() {
@@ -109,14 +77,6 @@ public class Course {
         this.departements = departements;
     }
 
-    public Set<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
-    }
-
     public Category getCategory() {
         return category;
     }
@@ -131,5 +91,13 @@ public class Course {
 
     public void setWarnings(Set<Warning> warnings) {
         this.warnings = warnings;
+    }
+
+    public Set<EmployeeCourse> getEmployeeCourses() {
+        return employeeCourses;
+    }
+
+    public void setEmployeeCourses(Set<EmployeeCourse> employeeCourses) {
+        this.employeeCourses = employeeCourses;
     }
 }
