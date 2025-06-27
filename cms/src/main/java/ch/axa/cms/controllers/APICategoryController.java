@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.axa.cms.models.Category;
 import ch.axa.cms.repositories.CategoryRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "Category", description = "Manage categories")
 public class APICategoryController {
 
   @Autowired

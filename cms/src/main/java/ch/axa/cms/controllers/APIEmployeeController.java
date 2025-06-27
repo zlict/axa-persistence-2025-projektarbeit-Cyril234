@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.axa.cms.models.Employee;
 import ch.axa.cms.repositories.EmployeeRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/employees")
+@Tag(name = "Employee", description = "Manage employees")
 public class APIEmployeeController {
 
   @Autowired

@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.axa.cms.models.Course;
 import ch.axa.cms.repositories.CourseRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/controllers")
+@Tag(name = "Course", description = "Manage courses")
 public class APICourseController {
     
   @Autowired

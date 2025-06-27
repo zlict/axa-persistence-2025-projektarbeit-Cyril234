@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.axa.cms.models.Warning;
 import ch.axa.cms.repositories.WarningRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/warnings")
+@Tag(name = "Warning", description = "Manage warnings")
 public class APIWarningController {
 
   @Autowired

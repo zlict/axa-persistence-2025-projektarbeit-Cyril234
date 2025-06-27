@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.axa.cms.models.Departement;
 import ch.axa.cms.repositories.DepartementRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/departements")
+@Tag(name = "Departement", description = "Manage departements")
 public class APIDepartementController {
 
   @Autowired
