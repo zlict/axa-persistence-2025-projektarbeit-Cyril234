@@ -1,4 +1,4 @@
- package ch.axa.cms.models;
+package ch.axa.cms.models;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -30,6 +30,11 @@ public class Course {
 
     private String description;
 
+    public Course(LocalDateTime expirationDate, String description) {
+        this.expirationDate = expirationDate;
+        this.description = description;
+    }
+
     @ManyToMany
     @JoinTable(name = "cours_departement", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "departement_id"))
     @JsonIgnoreProperties(value = "courses")
@@ -44,6 +49,12 @@ public class Course {
 
     @OneToMany(mappedBy = "course")
     private Set<EmployeeCourse> employeeCourses = new HashSet<>();
+
+    public Course(LocalDateTime expirationDate, String description, Category category) {
+        this.expirationDate = expirationDate;
+        this.description = description;
+        this.category = category;
+    }
 
     public long getId() {
         return id;

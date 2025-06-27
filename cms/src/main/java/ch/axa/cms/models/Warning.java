@@ -33,6 +33,12 @@ public class Warning {
     @JsonIgnoreProperties(value = "warnings")
     private Course course;
 
+    public Warning(LocalDateTime date, LocalDateTime expirationDate, Course course) {
+        this.date = date;
+        this.expirationDate = expirationDate;
+        this.course = course;
+    }
+
     public long getId() {
         return id;
     }

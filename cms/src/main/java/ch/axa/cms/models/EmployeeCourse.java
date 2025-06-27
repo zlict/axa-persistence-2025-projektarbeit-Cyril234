@@ -32,6 +32,16 @@ public class EmployeeCourse {
     @JsonIgnoreProperties(value = "employee_course")
     private Employee employee;
 
+
+
+    public EmployeeCourse(boolean finished, int duration, int score, Course course, Employee employee) {
+        this.finished = finished;
+        this.duration = duration;
+        this.score = score;
+        this.course = course;
+        this.employee = employee;
+    }
+
     public long getId() {
         return id;
     }

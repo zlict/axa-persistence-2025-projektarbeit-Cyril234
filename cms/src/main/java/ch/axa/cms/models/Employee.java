@@ -41,6 +41,13 @@ public class Employee {
     @JsonIgnoreProperties("superior")
     private Set<Employee> subordinates = new HashSet<>();
 
+    public Employee(String name, String mail, Departement departement, Employee superior) {
+        this.name = name;
+        this.mail = mail;
+        this.departement = departement;
+        this.superior = superior;
+    }
+
     public long getId() {
         return id;
     }
