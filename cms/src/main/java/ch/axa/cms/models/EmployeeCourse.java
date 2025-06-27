@@ -21,6 +21,7 @@ public class EmployeeCourse {
     private long id;
 
     @NotNull
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean finished;
 
     private int duration;
@@ -29,12 +30,10 @@ public class EmployeeCourse {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "employee_course")
-    @JsonBackReference("course-employeeCourse")
     private Course course;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "employee_course")
-    @JsonBackReference("employee-employeeCourse")
     private Employee employee;
 
     public EmployeeCourse() {

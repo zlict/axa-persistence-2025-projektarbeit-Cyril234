@@ -6,6 +6,7 @@ import java.util.Set;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "departement")
@@ -27,10 +28,11 @@ public class Departement {
     private String name;
 
     @ManyToMany(mappedBy = "departements")
+    @JsonIgnoreProperties(value = "departements")
     private Set<Course> courses = new HashSet<>();
 
-    @OneToMany(mappedBy = "employees")
-    @JsonBackReference("departement-employees")
+    @OneToMany(mappedBy = "departement", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "departements")
     private Set<Employee> employees = new HashSet<>();
 
     public Long getId() {
@@ -64,4 +66,4 @@ public class Departement {
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
     }
-} 
+}

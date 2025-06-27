@@ -7,6 +7,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,12 +32,12 @@ public class Warning {
     @NotNull
     private LocalDateTime expirationDate;
 
-    @ManyToMany(mappedBy = "warnings")
+    @ManyToMany(mappedBy = "warnings", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "warnings")
     private Set<Employee> employees = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = "warnings")
-    @JsonBackReference("course-warnings")
     private Course course;
 
     public Warning(LocalDateTime date, LocalDateTime expirationDate, Course course) {

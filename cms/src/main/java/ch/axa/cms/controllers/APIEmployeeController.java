@@ -43,16 +43,16 @@ public class APIEmployeeController {
     return entryRepository.getAllCourse(employeeID);
   }
 
-  @GetMapping("/getAllCourses")
+  @GetMapping("/getAllOpenCourse")
   public List<Course> getAllOpenCourse(@RequestParam String employeeID) {
     System.out.println(employeeID);
-    return entryRepository.getAllCourse(employeeID);
+    return entryRepository.getAllOpenCourse(employeeID);
   }
 
-  @GetMapping("/getAllCourses")
+  @GetMapping("/getAllCourseWithWarning")
   public List<Course> getAllCourseWithWarning(@RequestParam String employeeID) {
     System.out.println(employeeID);
-    return entryRepository.getAllCourse(employeeID);
+    return entryRepository.getAllCourseWithWarning(employeeID);
   }
   
 

@@ -28,8 +28,8 @@ public class Employee {
     @JsonIgnoreProperties(value = "employees")
     private Set<Warning> warnings = new HashSet<>();
 
-    @OneToMany(mappedBy = "employee")
-    @JsonBackReference("employee-employeeCourses")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "employees")
     private Set<EmployeeCourse> employeeCourses = new HashSet<>();
 
     @ManyToOne
@@ -39,12 +39,12 @@ public class Employee {
     // Selbstbeziehung: Vorgesetzter
     @ManyToOne
     @JoinColumn(name = "superior_id")
-    @JsonIgnoreProperties("subordinates")
+    @JsonIgnoreProperties(value = "employees")
     private Employee superior;
 
     // Selbstbeziehung: Untergebene
-    @OneToMany(mappedBy = "superior")
-    @JsonBackReference("superior-subordinates")
+    @OneToMany(mappedBy = "superior", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "employees")
     private Set<Employee> subordinates = new HashSet<>();
 
     public Employee() {
@@ -123,4 +123,4 @@ public class Employee {
 
 
     
-} 
+}

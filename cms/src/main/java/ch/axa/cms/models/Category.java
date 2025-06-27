@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,8 +38,8 @@ public class Category {
     @NotBlank(message = "Darf nicht leer sein!")
     private String description;
 
-    @OneToMany(mappedBy = "category")
-    @JsonBackReference("categories")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "categories")
     private Set<Course> courses = new HashSet<>();
 
     public long getId() {

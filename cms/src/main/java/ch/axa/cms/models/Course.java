@@ -7,6 +7,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,9 +36,13 @@ public class Course {
     @NotBlank(message = "Darf nicht leer sein!")
     private String description;
 
-    public Course(LocalDateTime expirationDate, String description) {
+    @Column(nullable = false)
+    private int duration;
+
+    public Course(LocalDateTime expirationDate, String description, int duration) {
         this.expirationDate = expirationDate;
         this.description = description;
+        this.duration = duration;
     }
 
     public Course() {
@@ -51,13 +56,14 @@ public class Course {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "courses")
-    @JsonBackReference("categories")
     private Category category;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "courses")
     private Set<Warning> warnings = new HashSet<>();
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "courses")
     private Set<EmployeeCourse> employeeCourses = new HashSet<>();
 
     public Course(LocalDateTime expirationDate, String description, Category category) {
@@ -120,5 +126,13 @@ public class Course {
 
     public void setEmployeeCourses(Set<EmployeeCourse> employeeCourses) {
         this.employeeCourses = employeeCourses;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }
