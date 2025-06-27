@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "warning")
@@ -23,7 +24,10 @@ public class Warning {
     @Column(name = "warning_id")
     private long id;
 
+    @NotNull
     private LocalDateTime date;
+
+    @NotNull
     private LocalDateTime expirationDate;
 
     @ManyToMany(mappedBy = "warnings")
@@ -37,6 +41,9 @@ public class Warning {
         this.date = date;
         this.expirationDate = expirationDate;
         this.course = course;
+    }
+
+    public Warning() {
     }
 
     public long getId() {

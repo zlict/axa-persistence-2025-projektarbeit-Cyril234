@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "employee_course")
@@ -18,6 +19,7 @@ public class EmployeeCourse {
     @Column(name = "employee_course_id")
     private long id;
 
+    @NotNull
     private boolean finished;
 
     private int duration;
@@ -32,7 +34,8 @@ public class EmployeeCourse {
     @JsonIgnoreProperties(value = "employee_course")
     private Employee employee;
 
-
+    public EmployeeCourse() {
+    }
 
     public EmployeeCourse(boolean finished, int duration, int score, Course course, Employee employee) {
         this.finished = finished;

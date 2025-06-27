@@ -17,6 +17,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "course")
@@ -26,13 +28,19 @@ public class Course {
     @Column(name = "course_id")
     private long id;
 
+    @NotNull(message = "Bitte gib den endzeitpukt bekannt!")
     private LocalDateTime expirationDate;
 
+    @NotBlank(message = "Darf nicht leer sein!")
     private String description;
 
     public Course(LocalDateTime expirationDate, String description) {
         this.expirationDate = expirationDate;
         this.description = description;
+    }
+
+    public Course() {
+
     }
 
     @ManyToMany

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "departement")
@@ -13,11 +14,15 @@ public class Departement {
         this.name = name;
     }
 
+    public Departement() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "departement_id")
     private Long id;
 
+    @NotBlank(message = "Darf nicht leer sein!")
     private String name;
 
     @ManyToMany(mappedBy = "departements")

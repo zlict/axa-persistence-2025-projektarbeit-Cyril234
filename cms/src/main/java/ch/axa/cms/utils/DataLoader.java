@@ -1,6 +1,5 @@
 package ch.axa.cms.utils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -49,10 +48,10 @@ public class DataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         createCategories();
-        createCours();
         createDepartement();
-        createEmployeeCourse();
+        createCours();
         createEmplyee();
+        createEmployeeCourse();
         createWarning();
     }
 
@@ -182,36 +181,92 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void createEmployeeCourse(){
-        Random rand = new Random();
-        for (Employee e : employees) {
-            for (Course c : courses) {
-                // Wenn Kurs für alle Departements oder Kurs-Departement = Employee-Departement
-                if (c.getDepartements().contains(e.getDepartement()) || c.getDepartements().size() == departements.size()) {
-                    boolean finished = rand.nextBoolean();
-                    int duration = 30 + rand.nextInt(90);
-                    int score = finished ? 60 + rand.nextInt(40) : 0;
-                    EmployeeCourse ec = new EmployeeCourse(finished, duration, score, c, e);
-                    employeeCourses.add(EmployeeCourseRepository.save(ec));
+        // Beispiel: Die ersten 5 Kurse sind für alle, dann nach Departement
+        // Annahme: employees und courses sind vollständig und in der gewünschten Reihenfolge befüllt
+        // Beispiel für die ersten 5 Employees und 5 Kurse (analog für alle anderen):
+        if (employees.size() >= 50 && courses.size() >= 20) {
+            // --- Für alle Employees: Kurse 0-4 ---
+            for (Employee e : employees) {
+                employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 80, courses.get(0), e)));
+                employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 80, courses.get(1), e)));
+                employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 80, courses.get(2), e)));
+                employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 80, courses.get(3), e)));
+                employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 80, courses.get(4), e)));
+            }
+            // --- IT (departements.get(1)) ---
+            for (Employee e : employees) {
+                if (e.getDepartement().equals(departements.get(1))) {
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 70, 85, courses.get(5), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 70, 85, courses.get(7), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 70, 85, courses.get(9), e)));
+                }
+            }
+            // --- Personalwesen (departements.get(2)) ---
+            for (Employee e : employees) {
+                if (e.getDepartement().equals(departements.get(2))) {
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 65, 75, courses.get(6), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 65, 75, courses.get(8), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 65, 75, courses.get(10), e)));
+                }
+            }
+            // --- Finanzen (departements.get(3)) ---
+            for (Employee e : employees) {
+                if (e.getDepartement().equals(departements.get(3))) {
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 80, 90, courses.get(11), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 80, 90, courses.get(13), e)));
+                }
+            }
+            // --- Marketing (departements.get(4)) ---
+            for (Employee e : employees) {
+                if (e.getDepartement().equals(departements.get(4))) {
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 70, courses.get(12), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 60, 70, courses.get(14), e)));
+                }
+            }
+            // --- Vertrieb (departements.get(5)) ---
+            for (Employee e : employees) {
+                if (e.getDepartement().equals(departements.get(5))) {
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 75, 80, courses.get(15), e)));
+                    employeeCourses.add(EmployeeCourseRepository.save(new EmployeeCourse(true, 75, 80, courses.get(17), e)));
                 }
             }
         }
     }
 
     private void createWarning(){
-        Random rand = new Random();
-        for (Employee e : employees) {
-            int warnCount = rand.nextInt(8); // 0-7 Warnungen
-            List<EmployeeCourse> ecs = new ArrayList<>();
-            for (EmployeeCourse ec : employeeCourses) {
-                if (ec.getEmployee().equals(e)) ecs.add(ec);
+        // Die meisten Employees haben keine oder 1 Warning, einige wenige haben viele
+        // Wir nehmen die ersten 40 Employees: keine Warning
+        // Die nächsten 5: 1 Warning
+        // Die nächsten 3: 3 Warnings
+        // Die letzten 2: 7 Warnings
+        if (employees.size() >= 50 && employeeCourses.size() > 0) {
+            // 41-45: 1 Warning
+            employeeCourses.stream().filter(ec -> ec.getEmployee().equals(employees.get(40))).findFirst().ifPresent(ec -> warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(10), LocalDateTime.now().plusMonths(6), ec.getCourse()))));
+            employeeCourses.stream().filter(ec -> ec.getEmployee().equals(employees.get(41))).findFirst().ifPresent(ec -> warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(10), LocalDateTime.now().plusMonths(6), ec.getCourse()))));
+            employeeCourses.stream().filter(ec -> ec.getEmployee().equals(employees.get(42))).findFirst().ifPresent(ec -> warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(10), LocalDateTime.now().plusMonths(6), ec.getCourse()))));
+            employeeCourses.stream().filter(ec -> ec.getEmployee().equals(employees.get(43))).findFirst().ifPresent(ec -> warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(10), LocalDateTime.now().plusMonths(6), ec.getCourse()))));
+            employeeCourses.stream().filter(ec -> ec.getEmployee().equals(employees.get(44))).findFirst().ifPresent(ec -> warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(10), LocalDateTime.now().plusMonths(6), ec.getCourse()))));
+            // 46-48: 3 Warnings
+            for (int i = 0; i < 3; i++) {
+                int empIdx = 45 + i;
+                List<EmployeeCourse> ecs = new ArrayList<>();
+                for (EmployeeCourse ec : employeeCourses) {
+                    if (ec.getEmployee().equals(employees.get(empIdx))) ecs.add(ec);
+                }
+                for (int j = 0; j < 3 && j < ecs.size(); j++) {
+                    warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(20*j), LocalDateTime.now().plusMonths(6+j), ecs.get(j).getCourse())));
+                }
             }
-            for (int i = 0; i < warnCount && !ecs.isEmpty(); i++) {
-                EmployeeCourse ec = ecs.get(rand.nextInt(ecs.size()));
-                LocalDateTime date = LocalDateTime.now().minusDays(rand.nextInt(365));
-                LocalDateTime exp = date.plusMonths(6+rand.nextInt(12));
-                Warning w = new Warning(date, exp, ec.getCourse());
-                warnings.add(warningRepository.save(w));
-                // Optional: e.getWarnings().add(w); // falls bidirektional gepflegt werden soll
+            // 49-50: 7 Warnings
+            for (int i = 0; i < 2; i++) {
+                int empIdx = 48 + i;
+                List<EmployeeCourse> ecs = new ArrayList<>();
+                for (EmployeeCourse ec : employeeCourses) {
+                    if (ec.getEmployee().equals(employees.get(empIdx))) ecs.add(ec);
+                }
+                for (int j = 0; j < 7 && j < ecs.size(); j++) {
+                    warnings.add(warningRepository.save(new Warning(LocalDateTime.now().minusDays(5*j), LocalDateTime.now().plusMonths(6+j), ecs.get(j).getCourse())));
+                }
             }
         }
     }   

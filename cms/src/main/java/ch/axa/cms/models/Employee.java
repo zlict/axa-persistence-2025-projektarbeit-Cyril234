@@ -6,6 +6,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "employee")
@@ -15,7 +16,10 @@ public class Employee {
     @Column(name = "employee_id")
     private long id;
 
+    @NotBlank(message = "Darf nicht leer sein!")
     private String name;
+
+    @NotBlank(message = "Darf nicht leer sein!")
     private String mail;
 
     @ManyToMany
@@ -40,6 +44,9 @@ public class Employee {
     @OneToMany(mappedBy = "superior")
     @JsonIgnoreProperties("superior")
     private Set<Employee> subordinates = new HashSet<>();
+
+    public Employee() {
+    }
 
     public Employee(String name, String mail, Departement departement, Employee superior) {
         this.name = name;

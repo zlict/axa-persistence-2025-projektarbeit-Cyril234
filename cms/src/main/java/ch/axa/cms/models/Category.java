@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "category")
@@ -21,12 +22,18 @@ public class Category {
         this.description = description;
     }
 
+    public Category() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
     private long id;
 
+    @NotBlank(message = "Darf nicht leer sein!")
     private String name;
+
+    @NotBlank(message = "Darf nicht leer sein!")
     private String description;
 
     @OneToMany(mappedBy = "category")
