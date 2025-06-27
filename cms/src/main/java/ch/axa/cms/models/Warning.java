@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,7 @@ public class Warning {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "warnings")
+    @JsonBackReference("course-warnings")
     private Course course;
 
     public Warning(LocalDateTime date, LocalDateTime expirationDate, Course course) {

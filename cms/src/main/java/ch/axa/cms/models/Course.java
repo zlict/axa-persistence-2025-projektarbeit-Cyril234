@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -50,6 +51,7 @@ public class Course {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "courses")
+    @JsonBackReference("categories")
     private Category category;
 
     @OneToMany(mappedBy = "course")

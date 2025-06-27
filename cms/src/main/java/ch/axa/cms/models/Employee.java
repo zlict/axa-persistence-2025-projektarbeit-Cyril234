@@ -3,6 +3,7 @@ package ch.axa.cms.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -28,6 +29,7 @@ public class Employee {
     private Set<Warning> warnings = new HashSet<>();
 
     @OneToMany(mappedBy = "employee")
+    @JsonBackReference("employee-employeeCourses")
     private Set<EmployeeCourse> employeeCourses = new HashSet<>();
 
     @ManyToOne
@@ -42,7 +44,7 @@ public class Employee {
 
     // Selbstbeziehung: Untergebene
     @OneToMany(mappedBy = "superior")
-    @JsonIgnoreProperties("superior")
+    @JsonBackReference("superior-subordinates")
     private Set<Employee> subordinates = new HashSet<>();
 
     public Employee() {

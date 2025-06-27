@@ -3,6 +3,8 @@ package ch.axa.cms.models;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +17,6 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 @Table(name = "category")
 public class Category {
-
-
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
@@ -37,6 +37,7 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category")
+    @JsonBackReference("categories")
     private Set<Course> courses = new HashSet<>();
 
     public long getId() {

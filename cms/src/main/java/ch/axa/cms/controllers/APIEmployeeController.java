@@ -42,6 +42,18 @@ public class APIEmployeeController {
     System.out.println(employeeID);
     return entryRepository.getAllCourse(employeeID);
   }
+
+  @GetMapping("/getAllCourses")
+  public List<Course> getAllOpenCourse(@RequestParam String employeeID) {
+    System.out.println(employeeID);
+    return entryRepository.getAllCourse(employeeID);
+  }
+
+  @GetMapping("/getAllCourses")
+  public List<Course> getAllCourseWithWarning(@RequestParam String employeeID) {
+    System.out.println(employeeID);
+    return entryRepository.getAllCourse(employeeID);
+  }
   
 
   @GetMapping

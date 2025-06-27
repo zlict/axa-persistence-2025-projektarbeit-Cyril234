@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "departement")
@@ -28,7 +29,8 @@ public class Departement {
     @ManyToMany(mappedBy = "departements")
     private Set<Course> courses = new HashSet<>();
 
-    @OneToMany(mappedBy = "departement")
+    @OneToMany(mappedBy = "employees")
+    @JsonBackReference("departement-employees")
     private Set<Employee> employees = new HashSet<>();
 
     public Long getId() {

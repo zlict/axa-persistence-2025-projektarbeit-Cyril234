@@ -1,5 +1,6 @@
 package ch.axa.cms.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -28,10 +29,12 @@ public class EmployeeCourse {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "employee_course")
+    @JsonBackReference("course-employeeCourse")
     private Course course;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "employee_course")
+    @JsonBackReference("employee-employeeCourse")
     private Employee employee;
 
     public EmployeeCourse() {
